@@ -10,7 +10,7 @@ jobs:
     
     - name: Sync
       env:
-        dest: 'ubuntu@54.172.207.252:/var/www/html/cicd'
+        dest: '${{secrets.RMT_USR}}@${{secrets.RMT_HST}}:${{ secrets.TARGET }}'
       run: |
         echo "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key
         chmod 600 ./deploy_key
