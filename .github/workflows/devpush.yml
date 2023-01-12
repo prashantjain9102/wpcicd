@@ -30,6 +30,6 @@ jobs:
         path: '${{needs.changed-files.outputs.all}}'
         remote_path: ${{ secrets.TARGET }}
         remote_host: ${{ secrets.RMT_HST }}
-        remote_port: '22'
+        remote_port: 22
         remote_user: ${{ secrets.RMT_USR }}
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
