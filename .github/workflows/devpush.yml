@@ -1,24 +1,29 @@
-name: Push-to-EC2
+name: Node CI
 
-# Trigger deployment only on push to master branch
-on:
-  push:
-    branches:
-      - dev
+on: [push]
 
 jobs:
-  deploy:
-    name: Deploy to EC2 on master branch push
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the files
-        uses: actions/checkout@v2
-
-      - name: Deploy to Server 1
-        uses: easingthemes/ssh-deploy@main
-        env:
+    - uses: actions/checkout@v1
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run build task
+      run: npm run build --if-present
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.RMT_HST }}
           REMOTE_USER: ${{ secrets.RMT_USR }}
           TARGET: ${{ secrets.TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
