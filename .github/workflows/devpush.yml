@@ -24,7 +24,7 @@ jobs:
   deploy:
       name: Deploy to server
       id: deploy
-      uses: burnett01/rsync-deployments@5.1
+      uses: burnett01/rsync-deployments@5.2.1
       with:
         switches: -avzr --delete
         path: '${{needs.changed-files.outputs.all}}'
