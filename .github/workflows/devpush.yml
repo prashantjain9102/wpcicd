@@ -10,11 +10,11 @@ jobs:
     
     - name: Sync
       env:
-        dest: '${{secrets.RMT_USR}}@${{secrets.RMT_HST}}:${{ secrets.TARGET }}'
+        dest: '${{secrets.RMT_USR}}@${{secrets.RMT_HST}}:/var/www/html/cicd'
       run: |
         echo "${{secrets.SSH_PRIVATE_KEY}}" > deploy_key
         chmod 600 ./deploy_key
-        rsync -chav --delete \
+        rsync --delete \
           -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
           --exclude /deploy_key \
           --exclude /.git/ \
