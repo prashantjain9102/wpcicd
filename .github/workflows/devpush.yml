@@ -22,7 +22,7 @@ jobs:
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
 
   deploy:
-    - name: Deploy to server
+      name: Deploy to server
       id: deploy
       uses: burnett01/rsync-deployments@5.1
       with:
