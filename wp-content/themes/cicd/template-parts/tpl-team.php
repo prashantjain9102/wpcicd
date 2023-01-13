@@ -7,5 +7,6 @@ get_header();
     <h2>Team page Template</h2>
     <h6>to understand the CI/CD Pipeline setup</h6>
     <h6>to understand the CI/CD Pipeline setup</h6>
+    <h4>New line is updated to check the working</h4>
 <?php 
 get_footer();
