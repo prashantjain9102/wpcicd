@@ -12,7 +12,7 @@ jobs:
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.2.1
         with:
-          switches: -avzr --delete --update --ignore-times --exclude=".git/" --exclude=".github/"
+          switches: -avzr --delete --exclude=".git/" --exclude=".github/"
           path: ./wp-content/themes/cicd/*
           remote_path: /var/www/html/cicd/wp-content/themes/cicd/
           remote_host: ${{ secrets.RMT_HST }}
