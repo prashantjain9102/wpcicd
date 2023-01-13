@@ -6,26 +6,28 @@ on:
 
 jobs:
   changed-files:
-    name: Changed files
     runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      all: ${{ steps.changes.outputs.all}}
     steps:
-      # Make sure we have some code to diff.
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2.1.0
+      - uses: jitterbit/get-changed-files@v1
+        id: abc
         with:
-          fetch-depth: 0
-      - name: Get changed files
-        uses: jitterbit/get-changed-files@v1
-        id: changes
-        # Set outputs using the command.
+          format: space-delimited
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Printing
         run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.changes.outputs.added_modified }}')
-          for added_modified_file in "${added_modified_files[@]}"; do
-          echo "Do something with this ${added_modified_file}."
-          done
+          echo "All:"
+          echo "${{ steps.abc.outputs.all }}"
+          echo "Added:"
+          echo "${{ steps.abc.outputs.added }}"
+          echo "Removed:"
+          echo "${{ steps.abc.outputs.removed }}"
+          echo "Renamed:"
+          echo "${{ steps.abc.outputs.renamed }}"
+          echo "Modified:"
+          echo "${{ steps.abc.outputs.modified }}"
+          echo "Added+Modified:"
+          echo "${{ steps.abc.outputs.added_modified }}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -35,7 +37,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.2.1
         with:
           switches: -avzr --delete --update --ignore-times --exclude=".git/" --exclude=".github/"
-          path: '${{needs.changed-files.outputs.all}}'
+          path: "${{needs.changed-files.outputs.all}}"
           remote_path: /var/www/html/cicd
           remote_host: ${{ secrets.RMT_HST }}
           remote_user: ${{ secrets.RMT_USR }}
