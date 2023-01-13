@@ -21,9 +21,11 @@ jobs:
         id: changes
         # Set outputs using the command.
         run: |
-          # echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
-          echo "::set-output name=all::$(git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA)"
+          # echo "::save-state name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+          echo "::save-state name=all::$(git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA)"
+          echo "::save-state name=testvar::demoval"
           echo "${{ steps.changes.outputs.all}}"
+          echo "${{ steps.changes.outputs.testvar}}"
 
   deploy:
     runs-on: ubuntu-latest
