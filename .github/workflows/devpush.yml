@@ -5,30 +5,6 @@ on:
       - dev
 
 jobs:
-  changed-files:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.1.0
-      - uses: jitterbit/get-changed-files@v1
-        id: abc
-        with:
-          format: space-delimited
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Printing
-        run: |
-          echo "All:"
-          echo "${{ steps.abc.outputs.all }}"
-          echo "Added:"
-          echo "${{ steps.abc.outputs.added }}"
-          echo "Removed:"
-          echo "${{ steps.abc.outputs.removed }}"
-          echo "Renamed:"
-          echo "${{ steps.abc.outputs.renamed }}"
-          echo "Modified:"
-          echo "${{ steps.abc.outputs.modified }}"
-          echo "Added+Modified:"
-          echo "${{ steps.abc.outputs.added_modified }}"
-
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -37,8 +13,8 @@ jobs:
         uses: burnett01/rsync-deployments@5.2.1
         with:
           switches: -avzr --delete --update --ignore-times --exclude=".git/" --exclude=".github/"
-          path: ./wp-content/themes/cicd/template-parts/tpl-team.php
-          remote_path: /var/www/html/cicd/wp-content/themes/cicd/template-parts
+          path: ./wp-content/themes/cicd
+          remote_path: /var/www/html/cicd/wp-content/themes/cicd
           remote_host: ${{ secrets.RMT_HST }}
           remote_user: ${{ secrets.RMT_USR }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
