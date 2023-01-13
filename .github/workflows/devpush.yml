@@ -21,7 +21,8 @@ jobs:
         id: changes
         # Set outputs using the command.
         run: |
-          echo "::save-state name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+          echo "::save-state name=all::$(git diff --name-only)"
+          echo "${{needs.changed-files.outputs.all}}"
 
   deploy:
     runs-on: ubuntu-latest
