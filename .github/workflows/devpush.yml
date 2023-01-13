@@ -37,7 +37,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.2.1
         with:
           switches: -avzr --delete --update --ignore-times --exclude=".git/" --exclude=".github/"
-          path: "${{ steps.abc.outputs.all }}"
+          path: "${{ needs.abc.outputs.all }}"
           remote_path: /var/www/html/cicd
           remote_host: ${{ secrets.RMT_HST }}
           remote_user: ${{ secrets.RMT_USR }}

@@ -15,5 +15,6 @@ get_header();
     <h6>to understand the CI/CD Pipeline setup</h6>
     <h6>to understand the CI/CD Pipeline setup</h6>
     <h6>to understand the CI/CD Pipeline setup</h6>
+    <h6>another value is updated</h6>
 <?php 
 get_footer();
