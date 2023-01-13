@@ -11,5 +11,6 @@ get_header();
     <h4>New line is updated to check the working</h4>
     <h6>New line is updated to check the working....</h6>
     <h6>..........New line is updated to check the working....</h6>
+    <h6>..........New line is updated to check the working....</h6>
 <?php 
 get_footer();
